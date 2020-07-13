@@ -16,7 +16,7 @@ namespace GetAnIOTSampleApp.Server
         {
             Configuration = configuration;
             GetAnIOTSampleApp.Shared.WeatherForecast.Init(
-                GetSamples.GetSamplesProjects.GetDict("")
+                GetSamples.GetSamplesProjects.GetDict(@"C:\Users\DavidJones\source\dotnet-djaus-iot\iot")
             );
         }
 

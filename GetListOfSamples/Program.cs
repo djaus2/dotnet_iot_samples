@@ -24,7 +24,8 @@ namespace GetListOfSamples
 
         static void Main(string[] args)
         {
-            var projects = GetDict(@"C:\Users\DavidJones\source\dotnet\djaus2-2-iot\iot\src\Devices");
+            //var projects = GetDict(@"C:\Users\DavidJones\source\dotnet\djaus2-2-iot\iot\src\Devices");
+            var projects =GetDict( @"C:\Users\DavidJones\source\dotnet-djaus-iot\iot");
             var devices = projects.Keys;
             var devices2 = from p in projects select new Tuple<string,int>( p.Key, p.Value.Count() );
         }

@@ -8,7 +8,8 @@ namespace GetSamples
 {
     public static class GetSamplesProjects
     {
-        const string DefaultPath = @"C:\Users\DavidJones\source\dotnet\djaus2-2-iot\iot\src\Devices";
+        //const string DefaultPath = @"C:\Users\DavidJones\source\dotnet\djaus2-2-iot\iot\src\Devices";
+        const string DefaultPath =  @"C:\Users\DavidJones\source\dotnet-djaus-iot\iot";
             public static void GetSamplesList(string[] args)
             {
                 string path = DefaultPath;
@@ -24,6 +25,7 @@ namespace GetSamples
             {
             if (path == "")
                 path = DefaultPath;
+            path += @"\src\Devices";
                 var projects = GetProjects(path);
                 var devices = projects.GroupBy(x => x.DeviceName)
                                     .Select(g => g.First().DeviceName)

@@ -36,5 +36,6 @@ namespace GetAnIOTSampleApp.Server.Controllers
             })
             .ToArray();
         }
+
     }
 }

@@ -1,6 +1,8 @@
 @page "/fetchdata"
 @using GetAnIOTSampleApp.Shared
 @inject HttpClient Http
+@using ProjectClasses
+@inject Services.SamplesClient _SamplesClient
 
 <h1>Weather forecast</h1>
 
@@ -31,16 +33,30 @@ else
                     <td>@forecast.Summary</td>
                 </tr>
             }
+            @foreach (var a in Alpha)
+            {
+                <tr>
+                    <td>@a.Key</td>
+
+                    @*<td>@Alpha[a.Key].</td>
+                    <td>@alpha.TemperatureF</td>
+                    <td>@alpha.Summary</td>*@
+                </tr>
+            }
         </tbody>
     </table>
 }
 
 @code {
     private WeatherForecast[] forecasts;
+    private IEnumerable<IGrouping<char, KeyValuePair<string, List<Project>>>> Alpha;
 
     protected override async Task OnInitializedAsync()
     {
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+
+        Alpha = await _SamplesClient.Get();
+   
     }
 
 }

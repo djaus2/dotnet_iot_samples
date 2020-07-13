@@ -30,7 +30,7 @@ namespace GetAnIOTSampleApp.Shared
             //List<IGrouping<char,KeyValuePair<string, List<Project>>>>
             AlphaSort = Projects.GroupBy(x => char.ToUpper(x.Key[0]))
                 .ToList();
-
+            //AlphaSort[0]['A']
 
         }
 
