@@ -1,7 +1,122 @@
 ﻿@page "/"
+@using GetAnIOTSampleApp.Shared
+@using ProjectClasses
+@inject HttpClient Http
+@inject Services.SamplesClient _SamplesClient
+@using  GetAnIOTSampleApp.Client.Services;
+<h1>dotnet/iot Sample Apps</h1>
 
-<h1>Hello, world!</h1>
+@if (Alpha == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Letter</th>
+                <th>Total No. Samples</th>
+                <th>Device</th>
+                <th>Sample App/s</th>
 
-Welcome to your new app.
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var a in AlphaCount)
+            {
+            <tr>
+                <td><button id=p.Key class="btn btn-secondary" @onclick="@(e => SampleMe(a.Key))">@a.Key</button></td>
+                <td>@a.Count&nbsp;Samples</td>
+            </tr>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+                @if (AlphaViz[a.Key])
+                {
+                    @foreach (var b in AlphaDict[a.Key])
+                    {
+
+                        @if (b.Count < 2)
+                        {
+                            <tr>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>@b.Key</td>
+                                @foreach (var p in Projects[b.Key])
+                                {
+                                    <td><button id=p.Name class="btn btn-primary" @onclick="@(e => SampleMe2(p.Name))">@p.Name</button></td>
+                                }
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>.</td>
+                                <td>.</td>
+                                <td>@b.Key</td>
+                                <td>@b.Count&nbsp;Samples</td>
+                            </tr>
+                            @foreach (var p in Projects[b.Key])
+                            {
+                                <tr>
+                                    <td>.</td>
+                                    <td>.</td>
+                                    <td>.</td>
+                                    <td><button id=p.Name class="btn btn-primary" @onclick="@(e => SampleMe2(p.Name))">@p.Name</button></td>
+                                </tr>
+                            }
+                        }
+                    }
+                }
+            }
+
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private char CurrentIndex = 'A';
+
+    private WeatherForecast[] forecasts;
+    private List<IGrouping<char, KeyValuePair<string, List<Project>>>> Alpha = null;
+    public static List<AlphaCount> AlphaCount { get; set; }
+    private Dictionary<char, List<SampleCount>> AlphaDict { get; set; }
+    private Dictionary<char, bool> AlphaViz { get; set; }
+    private Dictionary<string, List<Project>> Projects { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        AlphaViz = new Dictionary<char, bool>();
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+
+        if(GetAnIOTSampleApp.Client.Services.SamplesClient.Samples==null)
+            Alpha = (await _SamplesClient.Get()).ToList();
+        else
+            Alpha = GetAnIOTSampleApp.Client.Services.SamplesClient.Samples;
+        AlphaCount = GetAnIOTSampleApp.Client.Services.SamplesClient.AlphaCount;
+
+        foreach (var z in AlphaCount)
+        {
+            AlphaViz.Add(z.Key, false);
+            AlphaViz[CurrentIndex] = true;
+        }
+        AlphaDict = GetAnIOTSampleApp.Client.Services.SamplesClient.AlphaDict;
+        Projects = GetAnIOTSampleApp.Client.Services.SamplesClient.Projects;
+
+    }
+
+
+    void SampleMe(char msg)
+    {
+        AlphaViz[msg] = true;
+        AlphaViz[CurrentIndex] = false;
+        CurrentIndex = msg;
+        StateHasChanged();
+    }
+
+    void SampleMe2(string msg)
+    {
+
+    }
+}
+

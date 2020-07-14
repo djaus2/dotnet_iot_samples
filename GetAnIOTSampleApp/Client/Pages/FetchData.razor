@@ -31,30 +31,32 @@ else
         {
             <tr>
                 <td>@a.Key</td>
+                <td><button type="button" class="collapsible">@a.Key</button></td>
                 <td>@a.Count&nbsp;Samples</td>
             </tr>
-            @foreach (var b in AlphaDict[a.Key])
-            {
-                @if (b.Count <2)
-                {
-    <tr>
-        <td>.</td>
-        <td>.</td>
-        <td>@b.Key</td>
-        @foreach (var p in Projects[b.Key])
-        {
-            <td><button id=p.Name class="btn btn-primary" @onclick="@(e =>SampleMe2(p.Name))">@p.Name</button></td>
-             }
-    </tr>
+
+                    @foreach (var b in AlphaDict[a.Key])
+                    {
+                        @if (b.Count < 2)
+                        {
+                    <tr>
+                        <td>.</td>
+                        <td>.</td>
+                        <td>@b.Key</td>
+                        @foreach (var p in Projects[b.Key])
+                        {
+                            <td><button id=p.Name class="btn btn-primary" @onclick="@(e =>SampleMe2(p.Name))">@p.Name</button></td>
+                        }
+                    </tr>
                 }
                 else
                 {
-    <tr>
-        <td>.</td>
-        <td>.</td>
-        <td>@b.Key</td>
-        <td>@b.Count&nbsp;Samples</td>
-    </tr>
+                    <tr>
+                        <td>.</td>
+                        <td>.</td>
+                        <td>@b.Key</td>
+                        <td>@b.Count&nbsp;Samples</td>
+                    </tr>
                     @foreach (var p in Projects[b.Key])
                     {
                         <tr>
@@ -65,9 +67,9 @@ else
                         </tr>
                     }
                 }
-            }
+                    }
+                }
 
-        }
     </tbody>
     </table>
 }
@@ -83,19 +85,10 @@ else
     {
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
 
-        Alpha = (await _SamplesClient.Get()).ToList();
+        Alpha = GetAnIOTSampleApp.Client.Services.SamplesClient.Samples;
         AlphaCount = GetAnIOTSampleApp.Client.Services.SamplesClient.AlphaCount;
         AlphaDict = GetAnIOTSampleApp.Client.Services.SamplesClient.AlphaDict;
         Projects = GetAnIOTSampleApp.Client.Services.SamplesClient.Projects;
-        //var a = Alpha[0];
-        //var b = Alpha[1];
-        //var z = b.Key;
-        //foreach (var c in b)
-        //{
-        //    var t = c.Key;
-        //    var h = c.Value;
-        //    int n = h.Count();
-        //}
 
     }
 
