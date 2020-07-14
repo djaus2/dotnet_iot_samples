@@ -15,35 +15,60 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>First Letter</th>
-                <th>Device</th>
-                <th>No. Samples</th>
-                <th>Total No. Samples</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var a in AlphaCount)
-            {
-                <tr>
-                    <td>@a.Key</td>
-                    <td>.</td>
-                    <td>.</td>
-                    <td>@a.Count</td>
-                </tr>
-                @foreach (var b in AlphaDict[a.Key])
-                {
-                <tr>
-                    <td>.</td>
-                    <td>@b.Key</td>
-                    <td>@b.Count</td>
-                </tr>
-                }
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Letter</th>
+            <th>Total No. Samples</th>
+            <th>Device</th>
+            <th>No. Samples</th>
+            <th>Sample Project Names</th>
 
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in AlphaCount)
+        {
+            <tr>
+                <td>@a.Key</td>
+                <td>@a.Count&nbsp;Samples</td>
+            </tr>
+            @foreach (var b in AlphaDict[a.Key])
+            {
+                @if (b.Count <2)
+                {
+    <tr>
+        <td>.</td>
+        <td>.</td>
+        <td>@b.Key</td>
+        @foreach (var p in Projects[b.Key])
+        {
+            <td><button id=p.Name class="btn btn-primary" @onclick="@(e =>SampleMe2(p.Name))">@p.Name</button></td>
+             }
+    </tr>
+                }
+                else
+                {
+    <tr>
+        <td>.</td>
+        <td>.</td>
+        <td>@b.Key</td>
+        <td>@b.Count&nbsp;Samples</td>
+    </tr>
+                    @foreach (var p in Projects[b.Key])
+                    {
+                        <tr>
+                            <td>.</td>
+                            <td>.</td>
+                            <td>.</td>
+                            <td><button id=p.Name class="btn btn-primary" @onclick="@(e =>SampleMe2(p.Name))">@p.Name</button></td>
+                        </tr>
+                    }
+                }
             }
-        </tbody>
+
+        }
+    </tbody>
     </table>
 }
 
@@ -52,6 +77,7 @@ else
     private List<IGrouping<char, KeyValuePair<string, List<Project>>>> Alpha;
     public static List<AlphaCount> AlphaCount { get; set; }
     private Dictionary<char, List<SampleCount>> AlphaDict { get; set; }
+    private Dictionary<string, List<Project>> Projects { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -60,6 +86,7 @@ else
         Alpha = (await _SamplesClient.Get()).ToList();
         AlphaCount = GetAnIOTSampleApp.Client.Services.SamplesClient.AlphaCount;
         AlphaDict = GetAnIOTSampleApp.Client.Services.SamplesClient.AlphaDict;
+        Projects = GetAnIOTSampleApp.Client.Services.SamplesClient.Projects;
         //var a = Alpha[0];
         //var b = Alpha[1];
         //var z = b.Key;
@@ -72,4 +99,8 @@ else
 
     }
 
+    void SampleMe2(string msg)
+    {
+
+    }
 }
