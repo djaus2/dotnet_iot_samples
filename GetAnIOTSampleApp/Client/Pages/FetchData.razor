@@ -3,8 +3,9 @@
 @inject HttpClient Http
 @using ProjectClasses
 @inject Services.SamplesClient _SamplesClient
+@using  GetAnIOTSampleApp.Client.Services;
 
-<h1>Weather forecast</h1>
+<h1>Indext</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
 
@@ -17,31 +18,30 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>First Letter</th>
+                <th>Device</th>
+                <th>No. Samples</th>
+                <th>Total No. Samples</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-            @foreach (var a in Alpha)
+            @foreach (var a in AlphaCount)
             {
                 <tr>
                     <td>@a.Key</td>
-
-                    @*<td>@Alpha[a.Key].</td>
-                    <td>@alpha.TemperatureF</td>
-                    <td>@alpha.Summary</td>*@
+                    <td>.</td>
+                    <td>.</td>
+                    <td>@a.Count</td>
                 </tr>
+                @foreach (var b in AlphaDict[a.Key])
+                {
+                <tr>
+                    <td>.</td>
+                    <td>@b.Key</td>
+                    <td>@b.Count</td>
+                </tr>
+                }
+
             }
         </tbody>
     </table>
@@ -49,14 +49,27 @@ else
 
 @code {
     private WeatherForecast[] forecasts;
-    private IEnumerable<IGrouping<char, KeyValuePair<string, List<Project>>>> Alpha;
+    private List<IGrouping<char, KeyValuePair<string, List<Project>>>> Alpha;
+    public static List<AlphaCount> AlphaCount { get; set; }
+    private Dictionary<char, List<SampleCount>> AlphaDict { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
 
-        Alpha = await _SamplesClient.Get();
-   
+        Alpha = (await _SamplesClient.Get()).ToList();
+        AlphaCount = GetAnIOTSampleApp.Client.Services.SamplesClient.AlphaCount;
+        AlphaDict = GetAnIOTSampleApp.Client.Services.SamplesClient.AlphaDict;
+        //var a = Alpha[0];
+        //var b = Alpha[1];
+        //var z = b.Key;
+        //foreach (var c in b)
+        //{
+        //    var t = c.Key;
+        //    var h = c.Value;
+        //    int n = h.Count();
+        //}
+
     }
 
 }

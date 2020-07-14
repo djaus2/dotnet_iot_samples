@@ -11,21 +11,35 @@ using Newtonsoft.Json.Linq;
 
 namespace GetAnIOTSampleApp.Client.Services
 {
+        public class AlphaCount
+        {
+            public char Key { get; set; }
+            public int Count { get; set; } = 0;
+        }
+
+        public class SampleCount
+        {
+            public string Key { get; set; }
+            public int Count { get; set; } = 0;
+        }
         public class SamplesClient
         {
             private readonly HttpClient client;
             private const string ServiceEndpoint = "/api/Samples";
 
             public static Dictionary<string, List<Project>> Projects { get; set; }
+            public static List<IGrouping<char, KeyValuePair<string, List<Project>>>> Samples = null;
+            public static Dictionary<char, List<SampleCount>> AlphaDict = null;
+            public static List<AlphaCount> AlphaCount { get; set; }
 
-            public SamplesClient(HttpClient client)
+        public SamplesClient(HttpClient client)
             {
                 this.client = client;
             }
 
             public async Task<IEnumerable<IGrouping<char, KeyValuePair<string, List<Project>>>>> Get()
             {
-            IEnumerable<IGrouping<char, KeyValuePair<string, List<Project>>>> samples = null;     
+                
 
 
                 try
@@ -38,8 +52,31 @@ namespace GetAnIOTSampleApp.Client.Services
                                 select new Tuple<string, int>(p.Key, p.Value.Count()))
                                 .ToList();
 
-                var AlphaSort = Projects.GroupBy(x => char.ToUpper(x.Key[0]))
+                 Samples = Projects.GroupBy(x => char.ToUpper(x.Key[0]))
                     .ToList();
+
+
+                AlphaCount = new List<AlphaCount>();
+                foreach (var c in Samples)
+                {
+                    var alp = new AlphaCount { Key = c.Key };
+                    foreach (var b in c)
+                    {
+                        alp.Count += b.Value.Count();
+                    }
+                    AlphaCount.Add(alp);
+                }
+
+                AlphaDict = new Dictionary<char, List<SampleCount>>();
+                foreach (var sample in Samples)
+                {
+                    List<SampleCount> projs = new List<SampleCount>();
+                    foreach (var subSample in sample)
+                    {
+                        projs.Add(new SampleCount { Key = subSample.Key, Count = subSample.Value.Count() });
+                    }
+                    AlphaDict.Add(sample.Key, projs);
+                }
             }
                 catch (Newtonsoft.Json.JsonException ex2) // Invalid JSON
                 {
@@ -61,12 +98,12 @@ namespace GetAnIOTSampleApp.Client.Services
                 }
                 catch (Exception ex3)
                 {
-                    samples = null;
+                Samples = null;
                     System.Diagnostics.Debug.WriteLine("Other error occured");
                     System.Diagnostics.Debug.WriteLine(ex3.Message);
                     System.Diagnostics.Debug.WriteLine(ex3.InnerException);
                 }
-                return samples;
+                return Samples;
             }
             
         /*
