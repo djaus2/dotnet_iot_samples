@@ -1,0 +1,44 @@
+﻿@page "/device/{DeviceNameProjectName}"
+@using GetAnIOTSampleApp.Shared
+@using ProjectClasses
+
+<h1>       Project Name: @project.Name</h1>
+<h2>         IoT-Device: @project.DeviceName</h2>
+<h3>Project C# Filename: @project.ProjectCSFileName</h3>
+<h3>   Project Filename: @project.ProjectFileName</h3>
+
+
+
+
+@code {
+    [Parameter]
+    public string DeviceNameProjectName { get; set; }
+
+    public string DeviceName { get; set; }
+    public string ProjectName { get; set; }
+
+
+
+    private Dictionary<string, List<Project>> Projects { get; set; }
+    private Project project;
+
+    protected override void OnInitialized()
+    {
+        string[] names = DeviceNameProjectName.Split(new char[] { '-' });
+        DeviceName = names[0];
+        ProjectName = names[1];
+
+        Projects = GetAnIOTSampleApp.Client.Services.SamplesClient.Projects;
+
+        List<string> keys = new List<string>(Projects.Keys);
+        List<List<Project>> values = (Projects.Values).ToList();
+        var n = Projects.Count;
+
+        List<Project> projects = Projects[DeviceName];
+        var xproject = from p in projects where p.Name==ProjectName select p;
+        project = xproject.FirstOrDefault();
+
+    }
+
+
+}
