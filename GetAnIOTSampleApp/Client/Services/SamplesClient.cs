@@ -37,6 +37,14 @@ namespace GetAnIOTSampleApp.Client.Services
                 this.client = client;
             }
 
+        public async Task<string> GetFile (string path)
+        {
+            string fileContents = "";
+            var strn = await client.GetAsync(ServiceEndpoint + $"/{path}");
+            fileContents = await strn.Content.ReadAsStringAsync();
+            return fileContents;
+        }
+
             public async Task<IEnumerable<IGrouping<char, KeyValuePair<string, List<Project>>>>> Get()
             {
                 

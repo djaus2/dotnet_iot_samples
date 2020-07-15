@@ -32,6 +32,25 @@ namespace GetAnIOTSampleApp.Server.Controllers
             return json;
         }
 
+        // GET api/<SamplesController>/5
+        [HttpGet("{param}")]
+        public string Get(string param)
+        {
+            string[] names = param.Split(new char[] { '-' });
+            string DeviceName = names[0];
+            string ProjectName = names[1];
+            List<Project> projects =
+                GetAnIOTSampleApp.Shared.WeatherForecast.Projects[DeviceName];
+            var xproject = from p in projects where p.Name == ProjectName select p;
+            var project = xproject.FirstOrDefault();
+            string path = $"{project.Path}/{project.ProjectCSFileName}";
+            string text = System.IO.File.ReadAllText(path);
+            return text;
+
+
+            //return "aaa\nbbb\r\nxxxx\nsss";
+        }
+
         /*
         // GET api/<SamplesController>/5
         [HttpGet("{id}")]

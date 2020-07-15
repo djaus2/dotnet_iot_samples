@@ -78,8 +78,8 @@ namespace GetSamples
                                         Name = ProjectName,
                                         DeviceName = DeviceName,
                                         Path = sampleDirPath,
-                                        ProjectCSFileName = projFileName,
-                                        ProjectFileName = csFileName //Should be Program.cs
+                                        ProjectCSFileName = csFileName,
+                                        ProjectFileName = projFileName //Should be Program.cs
                                 });
                                 }
                             }
@@ -102,9 +102,9 @@ namespace GetSamples
                                             Name = ProjectName,
                                             DeviceName = DeviceName,
                                             Path = sampleDirPath,
-                                            ProjectCSFileName = projFileName,
-                                            ProjectFileName = csFileName2 //Should be Program.cs
-                                    });
+                                            ProjectCSFileName = csFileName2,
+                                            ProjectFileName = projFileName//Should be Program.cs
+                                        });
                                     }
                                 }
                             }

@@ -1,13 +1,17 @@
 ﻿@page "/device/{DeviceNameProjectName}"
 @using GetAnIOTSampleApp.Shared
 @using ProjectClasses
+@inject Services.SamplesClient _SamplesClient
 
-<h1>       Project Name: @project.Name</h1>
-<h2>         IoT-Device: @project.DeviceName</h2>
-<h3>Project C# Filename: @project.ProjectCSFileName</h3>
-<h3>   Project Filename: @project.ProjectFileName</h3>
+<h1>Device Sample Project</h1>
+<table>
+    <tr><td align="right"><b><i>Project Name:</i></b></td><td>@project.Name</td></tr>
+    <tr><td align="right"><b><i>Device:</i></b></td><td>@project.DeviceName</td></tr>
+    <tr><td align="right"><b><i>Project C# Filename:</i></b></td><td>@project.ProjectCSFileName</td></tr>
+    <tr><td align="right"><b><i>Project Filename:</i></b></td><td>@project.ProjectFileName</td></tr>
+</table>
 
-
+<pre>@filecontents</pre>
 
 
 @code {
@@ -17,12 +21,14 @@
     public string DeviceName { get; set; }
     public string ProjectName { get; set; }
 
+    public string filecontents { get; set; }
+
 
 
     private Dictionary<string, List<Project>> Projects { get; set; }
     private Project project;
 
-    protected override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
         string[] names = DeviceNameProjectName.Split(new char[] { '-' });
         DeviceName = names[0];
@@ -35,9 +41,11 @@
         var n = Projects.Count;
 
         List<Project> projects = Projects[DeviceName];
-        var xproject = from p in projects where p.Name==ProjectName select p;
+        var xproject = from p in projects where p.Name == ProjectName select p;
         project = xproject.FirstOrDefault();
 
+        filecontents = await _SamplesClient.GetFile(DeviceNameProjectName);
+        //filecontents = filecontents.Replace("**", "</p><p>");
     }
 
 
