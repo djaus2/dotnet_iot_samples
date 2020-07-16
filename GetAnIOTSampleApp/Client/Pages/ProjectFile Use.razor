@@ -1,0 +1,39 @@
+﻿@page "/projectfileuse"
+@using GetAnIOTSampleApp.Shared
+@using ProjectClasses
+@using GetAnIOTSampleApp.Client.Components
+@inject Services.SamplesClient _SamplesClient
+
+<h3>Device Sample Project</h3>
+<h1>Project File to use</h1>
+
+<table>
+    <tr><td align="right"><b><i>Project Name:</i></b></td><td>@project.Name</td></tr>
+    <tr><td align="right"><b><i>Device:</i></b></td><td>@project.DeviceName</td></tr>
+    <tr><td align="right"><b><i>Project C# Filename:</i></b></td><td>@project.ProjectCSFileName</td></tr>
+    <tr><td align="right"><b><i>Project Filename:</i></b></td><td>@project.ProjectFileName</td></tr>
+    <tr><td align="right"><b><i>Project Circuit:</i></b></td><td>@project.ProjectPNGFileName</td></tr>
+</table>
+<br />
+<ClipBoardComponent Text=@textToCopy />
+<br />
+
+
+@code {
+    private Project project;
+    public string filecontents;
+    public string textToCopy;
+
+    protected async override Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        project = Services.SamplesClient.CurrentProject;
+
+        string DeviceNameProjectName = project.DeviceName + "-" + project.Name + "-ProjectFileUse";
+
+        filecontents = await _SamplesClient.GetFile(DeviceNameProjectName);
+        textToCopy = "<!-- " + project.ProjectFileName + "-->" + "\n" + filecontents;
+    }
+
+
+}

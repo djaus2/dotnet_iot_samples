@@ -9,6 +9,7 @@ namespace ProjectClasses
         public string DeviceName { get; set; }
         public string ProjectFileName { get; set; }
         public string ProjectCSFileName { get; set; }
+        public string ProjectPNGFileName { get; set; }
     }
 
     public class ProjectCount

@@ -23,6 +23,7 @@ namespace GetAnIOTSampleApp.Server.Controllers
         //    var alpha = WeatherForecast.AlphaSort;
         //    return alpha;
         //}
+        
 
         [HttpGet]
         public string Get()
@@ -39,11 +40,18 @@ namespace GetAnIOTSampleApp.Server.Controllers
             string[] names = param.Split(new char[] { '-' });
             string DeviceName = names[0];
             string ProjectName = names[1];
+            string FileType = names[2];
             List<Project> projects =
                 GetAnIOTSampleApp.Shared.WeatherForecast.Projects[DeviceName];
             var xproject = from p in projects where p.Name == ProjectName select p;
             var project = xproject.FirstOrDefault();
-            string path = $"{project.Path}/{project.ProjectCSFileName}";
+            string path="";
+            if (FileType == "SourceFile")
+                path = $"{project.Path}/{project.ProjectCSFileName}";
+            else if (FileType == "ProjectFile")
+                path = $"{project.Path}/{project.ProjectFileName}";
+            else if (FileType == "ProjectFileUse")
+                path = $"Project.csproj.txt";
             string text = System.IO.File.ReadAllText(path);
             return text;
 

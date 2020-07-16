@@ -2,6 +2,7 @@
 @using GetAnIOTSampleApp.Shared
 @using ProjectClasses
 @inject Services.SamplesClient _SamplesClient
+@inject NavigationManager navigationManager
 
 <h1>Device Sample Project</h1>
 <table>
@@ -9,9 +10,8 @@
     <tr><td align="right"><b><i>Device:</i></b></td><td>@project.DeviceName</td></tr>
     <tr><td align="right"><b><i>Project C# Filename:</i></b></td><td>@project.ProjectCSFileName</td></tr>
     <tr><td align="right"><b><i>Project Filename:</i></b></td><td>@project.ProjectFileName</td></tr>
+    <tr><td align="right"><b><i>Project Circuit:</i></b></td><td>@project.ProjectPNGFileName</td></tr>
 </table>
-
-<pre>@filecontents</pre>
 
 
 @code {
@@ -28,8 +28,26 @@
     private Dictionary<string, List<Project>> Projects { get; set; }
     private Project project;
 
-    protected async override Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
+        base.OnInitialized();
+
+        string deviceNameProjectName = null;
+        if ((DeviceNameProjectName == "none") || (DeviceNameProjectName == null))
+        {    if (Services.SamplesClient.CurrentProject != null)
+            {
+                deviceNameProjectName = Services.SamplesClient.CurrentProject.DeviceName +
+                    "-" + Services.SamplesClient.CurrentProject.Name;
+            }
+            DeviceNameProjectName = null;
+        }
+
+        DeviceNameProjectName = (DeviceNameProjectName != null) ? DeviceNameProjectName : deviceNameProjectName;
+        if (DeviceNameProjectName == null)
+        {
+            navigationManager.NavigateTo("/");
+        }
+
         string[] names = DeviceNameProjectName.Split(new char[] { '-' });
         DeviceName = names[0];
         ProjectName = names[1];
@@ -42,10 +60,9 @@
 
         List<Project> projects = Projects[DeviceName];
         var xproject = from p in projects where p.Name == ProjectName select p;
-        project = xproject.FirstOrDefault();
+        Services.SamplesClient.CurrentProject = xproject.FirstOrDefault();
+        project = Services.SamplesClient.CurrentProject;
 
-        filecontents = await _SamplesClient.GetFile(DeviceNameProjectName);
-        //filecontents = filecontents.Replace("**", "</p><p>");
     }
 
 

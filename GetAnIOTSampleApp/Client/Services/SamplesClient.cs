@@ -31,6 +31,7 @@ namespace GetAnIOTSampleApp.Client.Services
             public static List<IGrouping<char, KeyValuePair<string, List<Project>>>> Samples = null;
             public static Dictionary<char, List<SampleCount>> AlphaDict = null;
             public static List<AlphaCount> AlphaCount { get; set; }
+            public static Project CurrentProject { get; set;}
 
         public SamplesClient(HttpClient client)
             {

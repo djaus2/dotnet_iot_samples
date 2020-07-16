@@ -31,8 +31,6 @@ namespace GetSamples
                                     .Select(g => g.First().DeviceName)
                                     .ToList();
 
-                //var devices2 = projects.GroupBy(x => x.DeviceName);
-
                 Dictionary<string, List<Project>> myDictionary = projects
                     .GroupBy(o => o.DeviceName)
                     .ToDictionary(g => g.Key, g => g.ToList());
@@ -42,7 +40,7 @@ namespace GetSamples
             static List<Project> GetProjects(string path)
             {
                 List<Project> Projects = new List<Project>();
-                Console.WriteLine("Hello World!");
+            System.Diagnostics.Debug.WriteLine("Hello dotnet/iot-ers");
                 string[] dirs = Directory.GetDirectories(
                     path);
 
@@ -50,7 +48,7 @@ namespace GetSamples
                 {
                     string[] folders = dir.Split("\\");
                     string DeviceName = folders.Last();
-                    Console.WriteLine(DeviceName);
+                System.Diagnostics.Debug.WriteLine(DeviceName);
                     string[] samplesDirPaths = Directory.GetDirectories(dir, "samples");
                     foreach (var sampleDirPath in samplesDirPaths)
                     {
@@ -60,6 +58,7 @@ namespace GetSamples
                             var projFileName = Path.GetFileName(projFilePath);
                             string ProjectName = Path.GetFileNameWithoutExtension(projFilePath);
                             var filenameCS = ProjectName + ".cs";
+                            var pngFileName = ProjectName + ".png";
 
                             string[] csFilePaths = Directory.GetFiles(sampleDirPath, filenameCS);
                             if (csFilePaths.Length != 0)
@@ -67,11 +66,19 @@ namespace GetSamples
                                 foreach (string csFilePath in csFilePaths)
                                 {
                                     var csFileName = Path.GetFileName(csFilePath);
-                                    Console.WriteLine(ProjectName);
-                                    Console.WriteLine(sampleDirPath);
-                                    Console.WriteLine(projFileName);
-                                    Console.WriteLine(csFileName);
-
+                                System.Diagnostics.Debug.WriteLine(ProjectName);
+                                System.Diagnostics.Debug.WriteLine(sampleDirPath);
+                                System.Diagnostics.Debug.WriteLine(projFileName);
+                                System.Diagnostics.Debug.WriteLine(csFileName);
+                                if (!File.Exists($"{sampleDirPath}\\{pngFileName}"))
+                                {
+                                    pngFileName = "";
+                                    string[] images = Directory.GetFiles(sampleDirPath, "*.png");
+                                    if (images.Length > 0)
+                                        pngFileName = Path.GetFileNameWithoutExtension(images.FirstOrDefault())+".png";
+                                }
+                                System.Diagnostics.Debug.WriteLine(pngFileName);
+        
                                     Projects.Add(
                                     new Project
                                     {
@@ -79,8 +86,9 @@ namespace GetSamples
                                         DeviceName = DeviceName,
                                         Path = sampleDirPath,
                                         ProjectCSFileName = csFileName,
-                                        ProjectFileName = projFileName //Should be Program.cs
-                                });
+                                        ProjectFileName = projFileName, //Should be Program.cs
+                                        ProjectPNGFileName = pngFileName
+                                    });
                                 }
                             }
                             else
@@ -91,10 +99,18 @@ namespace GetSamples
                                     foreach (string csFilePath2 in csFilePaths2)
                                     {
                                         var csFileName2 = Path.GetFileName(csFilePath2);
-                                        Console.WriteLine(ProjectName);
-                                        Console.WriteLine(sampleDirPath);
-                                        Console.WriteLine(projFileName);
-                                        Console.WriteLine(csFileName2);
+                                        System.Diagnostics.Debug.WriteLine(ProjectName);
+                                        System.Diagnostics.Debug.WriteLine(sampleDirPath);
+                                        System.Diagnostics.Debug.WriteLine(projFileName);
+                                        System.Diagnostics.Debug.WriteLine(csFileName2);
+                                    if (!File.Exists($"{sampleDirPath}\\{pngFileName}"))
+                                    {
+                                        pngFileName = "";
+                                        string[] images = Directory.GetFiles(sampleDirPath, "*.png");
+                                        if (images.Length > 0)
+                                            pngFileName = Path.GetFileNameWithoutExtension(images.FirstOrDefault()) + ".png";
+                                    }
+                                    System.Diagnostics.Debug.WriteLine(pngFileName);
 
                                         Projects.Add(
                                         new Project
@@ -103,7 +119,8 @@ namespace GetSamples
                                             DeviceName = DeviceName,
                                             Path = sampleDirPath,
                                             ProjectCSFileName = csFileName2,
-                                            ProjectFileName = projFileName//Should be Program.cs
+                                            ProjectFileName = projFileName, //Should be Program.cs
+                                            ProjectPNGFileName = pngFileName
                                         });
                                     }
                                 }
