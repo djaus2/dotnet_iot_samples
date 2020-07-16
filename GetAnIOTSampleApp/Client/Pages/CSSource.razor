@@ -14,9 +14,11 @@
     <tr><td align="right"><b><i>Project Filename:</i></b></td><td>@project.ProjectFileName</td></tr>
     <tr><td align="right"><b><i>Project Circuit:</i></b></td><td>@project.ProjectPNGFileName</td></tr>
 </table>
+
 <br />
-<ClipBoardComponent Text=@textToCopy />
+<ClipBoardComponent Text=@textToCopy Filename=@project.ProjectCSFileName/>
 <br />
+
 
 @code {
     private Project project;
