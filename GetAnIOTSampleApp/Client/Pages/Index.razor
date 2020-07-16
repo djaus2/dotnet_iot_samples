@@ -84,7 +84,6 @@ else
 
 @code {
 
-    private char CurrentIndex = 'A';
 
     private WeatherForecast[] forecasts;
     private List<IGrouping<char, KeyValuePair<string, List<Project>>>> Alpha = null;
@@ -107,7 +106,10 @@ else
         foreach (var z in AlphaCount)
         {
             AlphaViz.Add(z.Key, false);
-            AlphaViz[CurrentIndex] = true;
+        }
+        if (AlphaViz.Keys.Contains(GetAnIOTSampleApp.Client.Services.SamplesClient.CurrentIndex))
+        {
+            AlphaViz[GetAnIOTSampleApp.Client.Services.SamplesClient.CurrentIndex] = true;
         }
         AlphaDict = GetAnIOTSampleApp.Client.Services.SamplesClient.AlphaDict;
         Projects = GetAnIOTSampleApp.Client.Services.SamplesClient.Projects;
@@ -115,11 +117,18 @@ else
     }
 
 
-    void SampleMe(char msg)
+    void SampleMe(char key)
     {
-        AlphaViz[msg] = true;
-        AlphaViz[CurrentIndex] = false;
-        CurrentIndex = msg;
+        AlphaViz[key] = true;
+        if (AlphaViz.Keys.Contains(GetAnIOTSampleApp.Client.Services.SamplesClient.CurrentIndex))
+        {
+            AlphaViz[GetAnIOTSampleApp.Client.Services.SamplesClient.CurrentIndex] = false;
+        }
+        if (AlphaViz.Keys.Contains(key))
+        {
+            GetAnIOTSampleApp.Client.Services.SamplesClient.CurrentIndex = key;
+            AlphaViz[key] = true;
+        }
         StateHasChanged();
     }
 

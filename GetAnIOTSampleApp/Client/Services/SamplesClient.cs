@@ -27,6 +27,8 @@ namespace GetAnIOTSampleApp.Client.Services
             private readonly HttpClient client;
             private const string ServiceEndpoint = "/api/Samples";
 
+            public static char CurrentIndex { get; set; } = '0';
+
             public static Dictionary<string, List<Project>> Projects { get; set; }
             public static List<IGrouping<char, KeyValuePair<string, List<Project>>>> Samples = null;
             public static Dictionary<char, List<SampleCount>> AlphaDict = null;

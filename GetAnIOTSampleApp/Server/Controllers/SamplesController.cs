@@ -7,6 +7,9 @@ using ProjectClasses;
 using GetAnIOTSampleApp.Shared;
 using Newtonsoft;
 using Newtonsoft.Json;
+using System.IO;
+using System.Drawing.Imaging;
+using System.Drawing;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -46,13 +49,29 @@ namespace GetAnIOTSampleApp.Server.Controllers
             var xproject = from p in projects where p.Name == ProjectName select p;
             var project = xproject.FirstOrDefault();
             string path="";
-            if (FileType == "SourceFile")
-                path = $"{project.Path}/{project.ProjectCSFileName}";
-            else if (FileType == "ProjectFile")
-                path = $"{project.Path}/{project.ProjectFileName}";
-            else if (FileType == "ProjectFileUse")
-                path = $"Project.csproj.txt";
-            string text = System.IO.File.ReadAllText(path);
+            string text = "";
+            if (FileType == "Image")
+            {
+                path= $"{project.Path}/{project.ProjectPNGFileName}";
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (Bitmap qrCodeImage  = new Bitmap(path))
+                    {
+                        qrCodeImage.Save(ms, ImageFormat.Png);
+                        text = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+                    }
+                }
+            }
+            else
+            {
+                if (FileType == "SourceFile")
+                    path = $"{project.Path}/{project.ProjectCSFileName}";
+                else if (FileType == "ProjectFile")
+                    path = $"{project.Path}/{project.ProjectFileName}";
+                else if (FileType == "ProjectFileUse")
+                    path = $"Project.csproj.txt";
+                text = System.IO.File.ReadAllText(path);
+            }
             return text;
 
 
