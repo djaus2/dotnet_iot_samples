@@ -113,21 +113,26 @@ else
         }
         AlphaDict = GetAnIOTSampleApp.Client.Services.SamplesClient.AlphaDict;
         Projects = GetAnIOTSampleApp.Client.Services.SamplesClient.Projects;
-
     }
-
 
     void SampleMe(char key)
     {
+        bool done = false;
         AlphaViz[key] = true;
         if (AlphaViz.Keys.Contains(GetAnIOTSampleApp.Client.Services.SamplesClient.CurrentIndex))
         {
+            if (key == GetAnIOTSampleApp.Client.Services.SamplesClient.CurrentIndex)
+                done = true;
             AlphaViz[GetAnIOTSampleApp.Client.Services.SamplesClient.CurrentIndex] = false;
+            GetAnIOTSampleApp.Client.Services.SamplesClient.CurrentIndex = '=';
         }
-        if (AlphaViz.Keys.Contains(key))
+        if (!done)
         {
-            GetAnIOTSampleApp.Client.Services.SamplesClient.CurrentIndex = key;
-            AlphaViz[key] = true;
+            if (AlphaViz.Keys.Contains(key))
+            {
+                GetAnIOTSampleApp.Client.Services.SamplesClient.CurrentIndex = key;
+                AlphaViz[key] = true;
+            }
         }
         StateHasChanged();
     }

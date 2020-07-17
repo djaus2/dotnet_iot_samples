@@ -52,10 +52,10 @@ namespace GetAnIOTSampleApp.Server.Controllers
             string text = "";
             if (FileType == "Image")
             {
-                path= $"{project.Path}/{project.ProjectPNGFileName}";
+                path = $"{project.Path}/{project.ProjectPNGFileName}";
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    using (Bitmap qrCodeImage  = new Bitmap(path))
+                    using (Bitmap qrCodeImage = new Bitmap(path))
                     {
                         qrCodeImage.Save(ms, ImageFormat.Png);
                         text = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
@@ -70,38 +70,40 @@ namespace GetAnIOTSampleApp.Server.Controllers
                     path = $"{project.Path}/{project.ProjectFileName}";
                 else if (FileType == "ProjectFileUse")
                     path = $"Project.csproj.txt";
+                else if (FileType == "ReadMe")
+                {
+                    path = Path.GetFullPath(Path.Combine(project.Path, @"..\ReadMe.md"));
+                }
                 text = System.IO.File.ReadAllText(path);
             }
             return text;
-
-
-            //return "aaa\nbbb\r\nxxxx\nsss";
         }
 
         /*
         // GET api/<SamplesController>/5
-        [HttpGet("{id}")]
+        [HttpGet("{ id} ")]
         public string Get(int id)
-        {
-            return "value";
-        }
+                    {
+                        return "value";
+                    }
 
-        // POST api/<SamplesController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+                    // POST api/<SamplesController>
+                    [HttpPost]
+                    public void Post([FromBody] string value)
+                    {
+                    }
 
-        // PUT api/<SamplesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+                    // PUT api/<SamplesController>/5
+                    [HttpPut("{id}")]
+                    public void Put(int id, [FromBody] string value)
+                    {
+                    }
 
-        // DELETE api/<SamplesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }*/
+                    // DELETE api/<SamplesController>/5
+                    [HttpDelete("{id}")]
+                    public void Delete(int id)
+                    {
+                    } */
     }
+            
 }

@@ -1,10 +1,11 @@
 ﻿@page "/device/{DeviceNameProjectName}"
 @using GetAnIOTSampleApp.Shared
 @using ProjectClasses
+@using GetAnIOTSampleApp.Client.Components
 @inject Services.SamplesClient _SamplesClient
 @inject NavigationManager navigationManager
 
-<h1>Device Sample Project</h1>
+<h3>Device Sample Project</h3>
 <table>
     <tr><td align="right"><b><i>Project Name:</i></b></td><td>@project.Name</td></tr>
     <tr><td align="right"><b><i>Device:</i></b></td><td>@project.DeviceName</td></tr>
@@ -12,29 +13,34 @@
     <tr><td align="right"><b><i>Project Filename:</i></b></td><td>@project.ProjectFileName</td></tr>
     <tr><td align="right"><b><i>Project Circuit:</i></b></td><td>@project.ProjectPNGFileName</td></tr>
 </table>
+<br />
+<MarkdownModel Content=@textToCopy />
+<br />
 
 
 @code {
     [Parameter]
-    public string DeviceNameProjectName { get; set; }
+    public string DeviceNameProjectName { get; set; } = "";
+
+    private Project project;
+    public string filecontents;
+    public string textToCopy;
 
     public string DeviceName { get; set; }
     public string ProjectName { get; set; }
 
-    public string filecontents { get; set; }
-
-
-
     private Dictionary<string, List<Project>> Projects { get; set; }
-    private Project project;
 
-    protected override void OnInitialized()
+
+
+    protected async override Task OnInitializedAsync()
     {
-        base.OnInitialized();
+        await base.OnInitializedAsync();
 
-        string deviceNameProjectName = null;
-        if ((DeviceNameProjectName == "none") || (DeviceNameProjectName == null))
-        {    if (Services.SamplesClient.CurrentProject != null)
+        string deviceNameProjectName = "";
+        if ((DeviceNameProjectName == "none") || (DeviceNameProjectName == null) || (DeviceNameProjectName == ""))
+        {
+            if (Services.SamplesClient.CurrentProject != null)
             {
                 deviceNameProjectName = Services.SamplesClient.CurrentProject.DeviceName +
                     "-" + Services.SamplesClient.CurrentProject.Name;
@@ -63,7 +69,25 @@
         Services.SamplesClient.CurrentProject = xproject.FirstOrDefault();
         project = Services.SamplesClient.CurrentProject;
 
+
+
+        project = Services.SamplesClient.CurrentProject;
+
+        string DeviceNameProjectNameType = project.DeviceName + "-" + project.Name + "-ReadMe";
+
+        filecontents = await _SamplesClient.GetFile(DeviceNameProjectNameType);
+        int start = filecontents.IndexOf("![");
+        int end = filecontents.IndexOf(")", start);
+        if ((start > 0) && (end>0))
+        {
+
+            textToCopy = filecontents.Substring(0, start - 1);
+            textToCopy += "&nbsp;See Circuit Page.<br/>";
+            textToCopy += filecontents.Substring(end + 1);
+        }
     }
+
+
 
 
 }
