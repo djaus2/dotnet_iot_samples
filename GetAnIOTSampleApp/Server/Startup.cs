@@ -15,9 +15,11 @@ namespace GetAnIOTSampleApp.Server
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            // In appsettings.json:
+            string DefaultPath = Configuration.GetValue<string>("PathToRepository");
+        
             GetAnIOTSampleApp.Shared.WeatherForecast.Init(
-                GetSamples.GetSamplesProjects.GetDict(@"C:\Users\DavidJones\source\dotnet\djaus2-2-iot\iot")
-                //GetSamples.GetSamplesProjects.GetDict(@"C:\Users\DavidJones\source\dotnet-djaus-iot\iot")
+                GetSamples.GetSamplesProjects.GetDict(DefaultPath)
             );
         }
 
