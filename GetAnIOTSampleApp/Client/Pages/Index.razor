@@ -1,4 +1,5 @@
 ﻿@page "/"
+@page "/index"
 @using GetAnIOTSampleApp.Shared
 @using ProjectClasses
 @inject HttpClient Http
@@ -125,6 +126,7 @@ else
                 done = true;
             AlphaViz[GetAnIOTSampleApp.Client.Services.SamplesClient.CurrentIndex] = false;
             GetAnIOTSampleApp.Client.Services.SamplesClient.CurrentIndex = '=';
+            GetAnIOTSampleApp.Client.Services.SamplesClient.CurrentProject = null;
         }
         if (!done)
         {

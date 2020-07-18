@@ -5,6 +5,7 @@
 @inject Services.SamplesClient _SamplesClient
 @inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
+@inject NavigationManager navigationManager
 
 <h3>Device Sample Project</h3>
 <h1>Project Circuit</h1>
@@ -28,22 +29,40 @@
 
     string QRCodeStr = "";
 
+    bool done = false;
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (done)
+            navigationManager.NavigateTo("/index");
+    }
+
     protected async override Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        project = Services.SamplesClient.CurrentProject;
-        if (project.ProjectPNGFileName == "")
+
+        if (Services.SamplesClient.CurrentProject == null)
         {
-            await JSRuntime.InvokeAsync<object>("alert", "No Circuit Diagram available!");
-            navigationManager.NavigateTo("/device/none");
+            project = new Project();
+            textToCopy = "";
+            done = true;
         }
         else
         {
-            string DeviceNameProjectName = project.DeviceName + "-" + project.Name + "-Image";
+            project = Services.SamplesClient.CurrentProject;
+            if (project.ProjectPNGFileName == "")
+            {
+                await JSRuntime.InvokeAsync<object>("alert", "No Circuit Diagram available!");
+                navigationManager.NavigateTo("/device/none");
+            }
+            else
+            {
+                string DeviceNameProjectName = project.DeviceName + "-" + project.Name + "-Image";
 
-            QRCodeStr = await _SamplesClient.GetFile(DeviceNameProjectName);
+                QRCodeStr = await _SamplesClient.GetFile(DeviceNameProjectName);
+            }
+
         }
-
     }
 
 

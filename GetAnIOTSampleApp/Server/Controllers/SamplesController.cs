@@ -69,10 +69,14 @@ namespace GetAnIOTSampleApp.Server.Controllers
                 else if (FileType == "ProjectFile")
                     path = $"{project.Path}/{project.ProjectFileName}";
                 else if (FileType == "ProjectFileUse")
-                    path = $"Project.csproj.txt";
+                    path = $"Pages//Project.csproj.txt";
                 else if (FileType == "ReadMe")
                 {
                     path = Path.GetFullPath(Path.Combine(project.Path, @"..\ReadMe.md"));
+                }
+                else if (FileType == "HowTo")
+                {
+                    path = $"Pages//HowTo.md"; ;
                 }
                 text = System.IO.File.ReadAllText(path);
             }

@@ -31,61 +31,93 @@
 
     private Dictionary<string, List<Project>> Projects { get; set; }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (done)
+            navigationManager.NavigateTo("/index");
+    }
 
 
+    bool done = false;
     protected async override Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
 
-        string deviceNameProjectName = "";
+        project = new Project();
+
+        done = false;
         if ((DeviceNameProjectName == "none") || (DeviceNameProjectName == null) || (DeviceNameProjectName == ""))
         {
-            if (Services.SamplesClient.CurrentProject != null)
+            if (Services.SamplesClient.CurrentProject == null)
             {
-                deviceNameProjectName = Services.SamplesClient.CurrentProject.DeviceName +
-                    "-" + Services.SamplesClient.CurrentProject.Name;
+                done = true;
             }
-            DeviceNameProjectName = null;
+            else
+            {
+                DeviceName = Services.SamplesClient.CurrentProject.DeviceName;
+                ProjectName = Services.SamplesClient.CurrentProject.Name;
+
+                DeviceNameProjectName = DeviceName +
+                "-" + ProjectName;
+            }
         }
-
-        DeviceNameProjectName = (DeviceNameProjectName != null) ? DeviceNameProjectName : deviceNameProjectName;
-        if (DeviceNameProjectName == null)
+        else
         {
-            navigationManager.NavigateTo("/");
+            string[] names = DeviceNameProjectName.Split(new char[] { '-' });
+            if (names.Length < 2)
+            {
+                done = false;
+
+            }
+            else if ((names[0] == "") || (names[1] == ""))
+            {
+                done = false;
+            }
+            else
+            {
+                DeviceName = names[0];
+                ProjectName = names[1];
+            }
         }
-
-        string[] names = DeviceNameProjectName.Split(new char[] { '-' });
-        DeviceName = names[0];
-        ProjectName = names[1];
-
-        Projects = GetAnIOTSampleApp.Client.Services.SamplesClient.Projects;
-
-        List<string> keys = new List<string>(Projects.Keys);
-        List<List<Project>> values = (Projects.Values).ToList();
-        var n = Projects.Count;
-
-        List<Project> projects = Projects[DeviceName];
-        var xproject = from p in projects where p.Name == ProjectName select p;
-        Services.SamplesClient.CurrentProject = xproject.FirstOrDefault();
-        project = Services.SamplesClient.CurrentProject;
-
-
-
-        project = Services.SamplesClient.CurrentProject;
-
-        string DeviceNameProjectNameType = project.DeviceName + "-" + project.Name + "-ReadMe";
-
-        filecontents = await _SamplesClient.GetFile(DeviceNameProjectNameType);
-        int start = filecontents.IndexOf("![");
-        int end = filecontents.IndexOf(")", start);
-        if ((start > 0) && (end>0))
+        if (done)
         {
+            textToCopy = "";
 
-            textToCopy = filecontents.Substring(0, start - 1);
-            textToCopy += "&nbsp;See Circuit Page.<br/>";
-            textToCopy += filecontents.Substring(end + 1);
+        }
+        else
+        {
+            Projects = GetAnIOTSampleApp.Client.Services.SamplesClient.Projects;
+
+            List<string> keys = new List<string>(Projects.Keys);
+            List<List<Project>> values = (Projects.Values).ToList();
+            var n = Projects.Count;
+
+            List<Project> projects = Projects[DeviceName];
+            var xproject = from p in projects where p.Name == ProjectName select p;
+            Services.SamplesClient.CurrentProject = xproject.FirstOrDefault();
+            project = Services.SamplesClient.CurrentProject;
+
+
+
+            project = Services.SamplesClient.CurrentProject;
+
+            string DeviceNameProjectNameType = project.DeviceName + "-" + project.Name + "-ReadMe";
+
+            filecontents = await _SamplesClient.GetFile(DeviceNameProjectNameType);
+            int start = filecontents.IndexOf("![");
+            int end = filecontents.IndexOf(")", start);
+            if ((start > 0) && (end > 0))
+            {
+
+                textToCopy = filecontents.Substring(0, start - 1);
+                textToCopy += "&nbsp;See Circuit Page.<br/>";
+                textToCopy += filecontents.Substring(end + 1);
+            }
         }
     }
+
+}
 
 
 

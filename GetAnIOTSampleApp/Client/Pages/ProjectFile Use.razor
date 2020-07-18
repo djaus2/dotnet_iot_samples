@@ -3,6 +3,7 @@
 @using ProjectClasses
 @using GetAnIOTSampleApp.Client.Components
 @inject Services.SamplesClient _SamplesClient
+@inject NavigationManager navigationManager
 
 <h3>Device Sample Project</h3>
 <h1>Project File to use</h1>
@@ -24,15 +25,33 @@
     public string filecontents;
     public string textToCopy;
 
+    bool done = false;
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (done)
+            navigationManager.NavigateTo("/index");
+    }
+
     protected async override Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        project = Services.SamplesClient.CurrentProject;
 
-        string DeviceNameProjectName = project.DeviceName + "-" + project.Name + "-ProjectFileUse";
+        if (Services.SamplesClient.CurrentProject == null)
+        {
+            project = new Project();
+            textToCopy = "";
+            done = true;
+        }
+        else
+        {
+            project = Services.SamplesClient.CurrentProject;
 
-        filecontents = await _SamplesClient.GetFile(DeviceNameProjectName);
-        textToCopy = "<!-- " + project.ProjectFileName + "-->" + "\n" + filecontents;
+            string DeviceNameProjectName = project.DeviceName + "-" + project.Name + "-ProjectFileUse";
+
+            filecontents = await _SamplesClient.GetFile(DeviceNameProjectName);
+            textToCopy = "<!-- " + project.ProjectFileName + "-->" + "\n" + filecontents;
+        }
     }
 
 

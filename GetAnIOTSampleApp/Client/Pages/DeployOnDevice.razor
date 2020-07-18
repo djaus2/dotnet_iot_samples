@@ -1,4 +1,4 @@
-﻿@page "/deploy"
+﻿@page "/deployondice"
 @using GetAnIOTSampleApp.Shared
 @using ProjectClasses
 @inject Services.SamplesClient _SamplesClient
@@ -14,11 +14,7 @@
     <tr><td align="right"><b><i>Project Circuit:</i></b></td><td>@project.ProjectPNGFileName</td></tr>
 </table>
 <br />
-<li>
-    <ul>
-        <td><button id=p.Key class="btn btn-secondary" @onclick="@(e => SampleMe('OnDevice'))">@a.Key</button></td>
-    </ul>
-</li>
+<MarkdownModel Content=@textToCopy />
 <br />
 
 
