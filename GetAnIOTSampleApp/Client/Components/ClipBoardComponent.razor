@@ -9,12 +9,11 @@
                 <td style="border: 0px">
                     <button type="button" class="btn btn-primary" @onclick="CopyTextToClipboard">Copy</button>
                 &nbsp;
-
-                    <button type="button" class="btn btn-primary" @onclick="DownloadFile">Download</button>
-                &nbsp;
-                    <b><i>Filename:</i></b>
-                &nbsp;
-                    @Filename</td>
+@if (@UseFileName)
+{
+     <button type="button" class="btn btn-primary" @onclick="DownloadFile">Download</button><b><i>&nbsp;Filename:&nbsp;</i></b>@Filename
+}
+                </td>
             </tr>
             <tr style="border: 0px">
                 <td style="border: 0px">
@@ -26,7 +25,18 @@
 
 @code {
     [Parameter] public string Text { get; set; }
-    [Parameter] public string Filename { get; set; }
+    [Parameter] public string Filename { get; set; } = "";
+
+    bool UseFileName = true;
+
+    protected async override Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        if (Filename == "")
+            UseFileName = false;
+    }
+
 
     private async Task CopyTextToClipboard()
     {

@@ -1,4 +1,4 @@
-﻿@page "/deploy"
+﻿@page "/deployviashare"
 @using GetAnIOTSampleApp.Shared
 @using ProjectClasses
 @inject Services.SamplesClient _SamplesClient
@@ -14,20 +14,19 @@
     <tr><td align="right"><b><i>Project Circuit:</i></b></td><td>@project.ProjectPNGFileName</td></tr>
 </table>
 <br />
-<h3>Assumes:</h3>
-<ul><li>Assumes: .NET Core SDK 3.1 is installed on the target device</li></ul>
-<h3>Deployment Options:</h3>
-<ul>
-    <li><button id=p.Key class="btn btn-secondary" @onclick='@(e => SampleMe("OnDevice"))'>Deploy here</button></li>
-    <li><button id=p.Key class="btn btn-secondary" @onclick='@(e => SampleMe("ToFileShare"))'>Deploy to File Share on remote target</button></li>
-    <li>_2Do: Add some more How2's here.</li>
-</ul>
-
+<MarkdownModel Content=@textToCopy />
 <br />
+<h5>Get System.Device.GPIO</h5>
+<ClipBoardComponent Text=@TextToCopyGPIO  />
+<h5>Get IoT.Device.Bindings</h5>
+<ClipBoardComponent Text=@TextToCopyBindings/>
 
+
+<h2>To Do</h2>
 
 @code {
-
+    string TextToCopyGPIO = "dotnet add package System.Device.Gpio --source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet5/nuget/v3/index.json";
+    string TextToCopyBindings = "dotnet add package Iot.Device.Bindings --source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet5/nuget/v3/index.json";
     string filecontents;
 
     private Project project;
@@ -43,10 +42,10 @@
     }
 
 
-
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+
         if (Services.SamplesClient.CurrentProject == null)
         {
             project = new Project();
@@ -56,22 +55,13 @@
         else
         {
             project = Services.SamplesClient.CurrentProject;
-        }
-        await Task.Delay(1); //Just to make it a task!
-    }
+            string DeviceNameProjectNameType = project.DeviceName + "-" + project.Name + "-HowTo2";
 
-    void SampleMe(string target)
-    {
-        switch (target)
-        {
-            case "OnDevice":
-                navigationManager.NavigateTo("/deployondevice");
-                break;
-            case "ToFileShare":
-                navigationManager.NavigateTo("/deployviashare");
-                break;
-        }
+            filecontents = await _SamplesClient.GetFile(DeviceNameProjectNameType);
 
+            textToCopy = filecontents;
+
+        }
     }
 
 

@@ -37,6 +37,8 @@
 
     protected async override Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
+
         if (Services.SamplesClient.CurrentProject == null)
         {
             project = new Project();

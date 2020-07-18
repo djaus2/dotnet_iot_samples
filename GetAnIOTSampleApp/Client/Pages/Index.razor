@@ -95,6 +95,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
+
         AlphaViz = new Dictionary<char, bool>();
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
 

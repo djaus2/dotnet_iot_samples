@@ -78,6 +78,10 @@ namespace GetAnIOTSampleApp.Server.Controllers
                 {
                     path = $"Pages//HowTo.md"; ;
                 }
+                else if (FileType == "HowTo2")
+                {
+                    path = $"Pages//HowTo2.md"; ;
+                }
                 text = System.IO.File.ReadAllText(path);
             }
             return text;

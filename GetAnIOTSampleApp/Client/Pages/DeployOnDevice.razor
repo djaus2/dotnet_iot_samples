@@ -1,4 +1,4 @@
-﻿@page "/deployondice"
+﻿@page "/deployondevice"
 @using GetAnIOTSampleApp.Shared
 @using ProjectClasses
 @inject Services.SamplesClient _SamplesClient
@@ -16,12 +16,17 @@
 <br />
 <MarkdownModel Content=@textToCopy />
 <br />
+<h5>Get System.Device.GPIO</h5>
+<ClipBoardComponent Text=@TextToCopyGPIO  />
+<h5>Get IoT.Device.Bindings</h5>
+<ClipBoardComponent Text=@TextToCopyBindings/>
 
 
 <h2>To Do</h2>
 
 @code {
-
+    string TextToCopyGPIO = "dotnet add package System.Device.Gpio --source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet5/nuget/v3/index.json";
+    string TextToCopyBindings = "dotnet add package Iot.Device.Bindings --source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet5/nuget/v3/index.json";
     string filecontents;
 
     private Project project;
@@ -39,7 +44,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
+        await base.OnInitializedAsync();
+
         if (Services.SamplesClient.CurrentProject == null)
         {
             project = new Project();
