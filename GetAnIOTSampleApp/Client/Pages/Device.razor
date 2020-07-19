@@ -7,12 +7,17 @@
 
 <h3>Device Sample Project</h3>
 <table>
-    <tr><td align="right"><b><i>Project Name:</i></b></td><td>@project.Name</td></tr>
+    <tr><td align="right"><b><i>Project Name:</i></b></td><td><h1>@project.Name</h1></td></tr>
     <tr><td align="right"><b><i>Device:</i></b></td><td>@project.DeviceName</td></tr>
     <tr><td align="right"><b><i>Project C# Filename:</i></b></td><td>@project.ProjectCSFileName</td></tr>
+    <tr><td align="right"><b><i>No. C# Files:</i></b></td><td>@project.NoCSFiles</td></tr>
     <tr><td align="right"><b><i>Project Filename:</i></b></td><td>@project.ProjectFileName</td></tr>
     <tr><td align="right"><b><i>Project Circuit:</i></b></td><td>@project.ProjectPNGFileName</td></tr>
 </table>
+@if (@NoCSFilesGT1){
+    <h3>This projecthas more than one source file.</h3>
+    <h3>The app only supports transmission of the main file at the moment (2DO)</h3>
+}
 <br />
 <MarkdownModel Content=@textToCopy />
 <br />
@@ -21,6 +26,8 @@
 @code {
     [Parameter]
     public string DeviceNameProjectName { get; set; } = "";
+
+    bool NoCSFilesGT1 = false;
 
     private Project project;
     public string filecontents;
@@ -33,6 +40,8 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
+        if (project.NoCSFiles > 1)
+            NoCSFilesGT1 = true;
         base.OnAfterRender(firstRender);
         if (done)
             navigationManager.NavigateTo("/index");
@@ -105,14 +114,24 @@
             string DeviceNameProjectNameType = project.DeviceName + "-" + project.Name + "-ReadMe";
 
             filecontents = await _SamplesClient.GetFile(DeviceNameProjectNameType);
-            int start = filecontents.IndexOf("![");
-            int end = filecontents.IndexOf(")", start);
-            if ((start > 0) && (end > 0))
+            textToCopy = filecontents;
+            try
             {
+                int start = filecontents.IndexOf("![");
+                if (start > 0)
+                {
+                    int end = filecontents.IndexOf(")", start);
+                    if ((start > 0) && (end > 0))
+                    {
 
-                textToCopy = filecontents.Substring(0, start - 1);
-                textToCopy += "&nbsp;See Circuit Page.<br/>";
-                textToCopy += filecontents.Substring(end + 1);
+                        textToCopy = filecontents.Substring(0, start - 1);
+                        textToCopy += "&nbsp;See Circuit Page.<br/>";
+                        textToCopy += filecontents.Substring(end + 1);
+                    }
+                }
+            }catch(Exception)
+            {
+                textToCopy = filecontents;
             }
         }
     }

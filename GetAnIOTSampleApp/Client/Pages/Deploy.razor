@@ -7,9 +7,10 @@
 
 <h1>How to Deploy Device Sample Project</h1>
 <table>
-    <tr><td align="right"><b><i>Project Name:</i></b></td><td>@project.Name</td></tr>
+    <tr><td align="right"><b><i>Project Name:</i></b></td><td><h1>@project.Name</h1></td></tr>
     <tr><td align="right"><b><i>Device:</i></b></td><td>@project.DeviceName</td></tr>
     <tr><td align="right"><b><i>Project C# Filename:</i></b></td><td>@project.ProjectCSFileName</td></tr>
+    <tr><td align="right"><b><i>No. C# Files:</i></b></td><td>@project.NoCSFiles</td></tr>
     <tr><td align="right"><b><i>Project Filename:</i></b></td><td>@project.ProjectFileName</td></tr>
     <tr><td align="right"><b><i>Project Circuit:</i></b></td><td>@project.ProjectPNGFileName</td></tr>
 </table>
@@ -19,7 +20,7 @@
 <h3>Deployment Options:</h3>
 <ul>
     <li><button id=p.Key class="btn btn-secondary" @onclick='@(e => SampleMe("OnDevice"))'>Deploy here</button></li>
-    <li><button id=p.Key class="btn btn-secondary" @onclick='@(e => SampleMe("ToFileShare"))'>Deploy to File Share on remote target</button></li>
+    <li><button id=p.Key class="btn btn-secondary" @onclick='@(e => SampleMe("ToFileShare"))'>Deploy via a File Share on the remote target, or FTP</button></li>
     <li>_2Do: Add some more How2's here.</li>
 </ul>
 

@@ -10,6 +10,7 @@ namespace ProjectClasses
         public string ProjectFileName { get; set; }
         public string ProjectCSFileName { get; set; }
         public string ProjectPNGFileName { get; set; }
+        public int NoCSFiles { get; set; } = 1;
     }
 
     public class ProjectCount

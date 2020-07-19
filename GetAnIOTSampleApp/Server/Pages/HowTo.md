@@ -14,12 +14,14 @@
 6. Get a copy of the project file into the Sample folder:  
 _The Rep. Project File from the repository is not suitable as it assumes the presence of the whole repository source code._
   - _So_, as per 5. get the **Use This ProjFile** (either way). Make sure it is named as above (the _Project Filename_).  
-  _In the Sample folder on the target in a Terminal:_
-4. Get the System.Device.GPIO and IoT.Device.Bindings packages:
+  
+   _**In a terminal on the target in the Sample folder:**_  
+
+7. Get the System.Device.GPIO and IoT.Device.Bindings packages:
   - Copy and run each of the ```dotnet add package``` commands as below in a terminal on the target in the _Sample_ folder.  
   _These are the latest nightly builds_
-7. Build and run the app:   
+8. Build and run the app:   
  ```dot net run```
-8. Publish there app here:  
+9. Publish there app here:  
  ```dotnet publish```  
  You can now run the app using ```<projname>.exe``` 
