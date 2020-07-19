@@ -1,0 +1,73 @@
+﻿@page "/deploy"
+@using GetAnIOTSampleApp.Shared
+@using ProjectClasses
+@inject Services.SamplesClient _SamplesClient
+@inject NavigationManager navigationManager
+@using GetAnIOTSampleApp.Client.Components
+
+    <h1>If your app fails to build with V1.0.0 GPIO and Bindings</h1>
+<table>
+    <tr><td align="right"><b><i>Project Name:</i></b></td><td><h1>@project.Name</h1></td></tr>
+    <tr><td align="right"><b><i>Device:</i></b></td><td>@project.DeviceName</td></tr>
+    <tr><td align="right"><b><i>Project C# Filename:</i></b></td><td>@project.ProjectCSFileName</td></tr>
+    <tr><td align="right"><b><i>No. C# Files:</i></b></td><td>@project.NoCSFiles</td></tr>
+    <tr><td align="right"><b><i>Project Filename:</i></b></td><td>@project.ProjectFileName</td></tr>
+    <tr><td align="right"><b><i>Project Circuit:</i></b></td><td>@project.ProjectPNGFileName</td></tr>
+</table>
+<br />
+<h3>Watch this spaces</h3
+
+But in the mean time look at <a href="http://127.0.0.1:4000/coding/Nuget_Packages-Creating_and_using_a_local_Package-coding.html">Creating and using a local Nuget Package</a>
+<br />
+
+
+@code {
+
+    string filecontents;
+
+    private Project project;
+
+    string textToCopy = "```Watch this space```";
+
+    bool done = false;
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (done)
+            navigationManager.NavigateTo("/index");
+    }
+
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if (Services.SamplesClient.CurrentProject == null)
+        {
+            project = new Project();
+            textToCopy = "";
+            done = true;
+        }
+        else
+        {
+            project = Services.SamplesClient.CurrentProject;
+        }
+        await Task.Delay(1); //Just to make it a task!
+    }
+
+    void SampleMe(string target)
+    {
+        switch (target)
+        {
+            case "OnDevice":
+                navigationManager.NavigateTo("/deployondevice");
+                break;
+            case "ToFileShare":
+                navigationManager.NavigateTo("/deployviashare");
+                break;
+        }
+
+    }
+
+
+}
