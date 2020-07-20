@@ -48,74 +48,71 @@ namespace GetAnIOTSampleApp.Client.Services
             return fileContents;
         }
 
-            public async Task<IEnumerable<IGrouping<char, KeyValuePair<string, List<Project>>>>> Get()
+        public async Task<IEnumerable<IGrouping<char, KeyValuePair<string, List<Project>>>>> Get()
+        {
+            try
             {
-                
+                var strn = await client.GetAsync(ServiceEndpoint);
+                string content = await strn.Content.ReadAsStringAsync();
+                Projects = JsonConvert.DeserializeObject< Dictionary<string, List<Project>> >(content);
+                var Devices = Projects.Keys.ToList();
+            var DeviceCounts = (from p in Projects
+                            select new Tuple<string, int>(p.Key, p.Value.Count()))
+                            .ToList();
+
+                Samples = Projects.GroupBy(x => char.ToUpper(x.Key[0]))
+                .ToList();
 
 
-                try
+            AlphaCount = new List<AlphaCount>();
+            foreach (var c in Samples)
+            {
+                var alp = new AlphaCount { Key = c.Key };
+                foreach (var b in c)
                 {
-                    var strn = await client.GetAsync(ServiceEndpoint);
-                    string content = await strn.Content.ReadAsStringAsync();
-                    Projects = JsonConvert.DeserializeObject< Dictionary<string, List<Project>> >(content);
-                    var Devices = Projects.Keys.ToList();
-                var DeviceCounts = (from p in Projects
-                                select new Tuple<string, int>(p.Key, p.Value.Count()))
-                                .ToList();
-
-                 Samples = Projects.GroupBy(x => char.ToUpper(x.Key[0]))
-                    .ToList();
-
-
-                AlphaCount = new List<AlphaCount>();
-                foreach (var c in Samples)
-                {
-                    var alp = new AlphaCount { Key = c.Key };
-                    foreach (var b in c)
-                    {
-                        alp.Count += b.Value.Count();
-                    }
-                    AlphaCount.Add(alp);
+                    alp.Count += b.Value.Count();
                 }
-
-                AlphaDict = new Dictionary<char, List<SampleCount>>();
-                foreach (var sample in Samples)
-                {
-                    List<SampleCount> projs = new List<SampleCount>();
-                    foreach (var subSample in sample)
-                    {
-                        projs.Add(new SampleCount { Key = subSample.Key, Count = subSample.Value.Count() });
-                    }
-                    AlphaDict.Add(sample.Key, projs);
-                }
+                AlphaCount.Add(alp);
             }
-                catch (Newtonsoft.Json.JsonException ex2) // Invalid JSON
+
+            AlphaDict = new Dictionary<char, List<SampleCount>>();
+            foreach (var sample in Samples)
+            {
+                List<SampleCount> projs = new List<SampleCount>();
+                foreach (var subSample in sample)
                 {
-                    System.Diagnostics.Debug.WriteLine("Invalid JSON.");
-                    System.Diagnostics.Debug.WriteLine(ex2.Message);
-                    System.Diagnostics.Debug.WriteLine(ex2.InnerException);
+                    projs.Add(new SampleCount { Key = subSample.Key, Count = subSample.Value.Count() });
                 }
-                catch (HttpRequestException ex) // Non success
-                {
-                    System.Diagnostics.Debug.WriteLine("An Http error occurred.");
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
-                    System.Diagnostics.Debug.WriteLine(ex.InnerException);
-                }
-                catch (NotSupportedException ex1) // When content type is not valid
-                {
-                    System.Diagnostics.Debug.WriteLine("The content type is not supported.");
-                    System.Diagnostics.Debug.WriteLine(ex1.Message);
-                    System.Diagnostics.Debug.WriteLine(ex1.InnerException);
-                }
-                catch (Exception ex3)
-                {
-                Samples = null;
-                    System.Diagnostics.Debug.WriteLine("Other error occured");
-                    System.Diagnostics.Debug.WriteLine(ex3.Message);
-                    System.Diagnostics.Debug.WriteLine(ex3.InnerException);
-                }
-                return Samples;
+                AlphaDict.Add(sample.Key, projs);
             }
+        }
+            catch (Newtonsoft.Json.JsonException ex2) // Invalid JSON
+            {
+                System.Diagnostics.Debug.WriteLine("Invalid JSON.");
+                System.Diagnostics.Debug.WriteLine(ex2.Message);
+                System.Diagnostics.Debug.WriteLine(ex2.InnerException);
+            }
+            catch (HttpRequestException ex) // Non success
+            {
+                System.Diagnostics.Debug.WriteLine("An Http error occurred.");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.InnerException);
+            }
+            catch (NotSupportedException ex1) // When content type is not valid
+            {
+                System.Diagnostics.Debug.WriteLine("The content type is not supported.");
+                System.Diagnostics.Debug.WriteLine(ex1.Message);
+                System.Diagnostics.Debug.WriteLine(ex1.InnerException);
+            }
+            catch (Exception ex3)
+            {
+            Samples = null;
+                System.Diagnostics.Debug.WriteLine("Other error occured");
+                System.Diagnostics.Debug.WriteLine(ex3.Message);
+                System.Diagnostics.Debug.WriteLine(ex3.InnerException);
+            }
+            return Samples;
+        }
             
         /*
             public async Task<List<BookingSlot>> GetSlotListFwd()// (int Id = 0)

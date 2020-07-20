@@ -86,7 +86,6 @@ else
 @code {
 
 
-    private WeatherForecast[] forecasts;
     private List<IGrouping<char, KeyValuePair<string, List<Project>>>> Alpha = null;
     public static List<AlphaCount> AlphaCount { get; set; }
     private Dictionary<char, List<SampleCount>> AlphaDict { get; set; }
@@ -98,7 +97,6 @@ else
         await base.OnInitializedAsync();
 
         AlphaViz = new Dictionary<char, bool>();
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
 
         if (GetAnIOTSampleApp.Client.Services.SamplesClient.Samples == null)
             Alpha = (await _SamplesClient.Get()).ToList();
