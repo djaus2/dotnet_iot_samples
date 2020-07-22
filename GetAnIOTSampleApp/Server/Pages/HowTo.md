@@ -18,8 +18,10 @@ _The Rep. Project File from the repository is not suitable as it assumes the pre
    _**In a terminal on the target in the Sample folder:**_  
 
 7. Get the System.Device.GPIO and IoT.Device.Bindings packages:
-  - Copy and run each of the ```dotnet add package``` commands as below in a terminal on the target in the _Sample_ folder.  
-  _These are the latest nightly builds_
+  - These are specified as verion 1.0.0
+  - They will be downloaded when teh app is built and run
+  - If you find build/run error it is probably because you need V1.1.0-dev.
+    - See the next page **App needs V1.1.0 APIs**
 8. Build and run the app:   
  ```dot net run```
 9. Publish there app here:  

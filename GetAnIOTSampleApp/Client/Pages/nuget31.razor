@@ -1,13 +1,13 @@
-﻿@page "/deploy"
+﻿@page "/nuget31"
 @using GetAnIOTSampleApp.Shared
 @using ProjectClasses
 @inject Services.SamplesClient _SamplesClient
 @inject NavigationManager navigationManager
 @using GetAnIOTSampleApp.Client.Components
 
-    <h1>If your app fails to build with V1.0.0 GPIO and Bindings</h1>
+<h1>GPIO and Bindings Packages</h1>
 <table>
-    <tr><td align="right"><b><i>Project Name:</i></b></td><td><h1>@project.Name</h1></td></tr>
+    <tr><td align="right"><b><i>Project Name:</i></b></td><td><h2>@project.Name</h2></td></tr>
     <tr><td align="right"><b><i>Device:</i></b></td><td>@project.DeviceName</td></tr>
     <tr><td align="right"><b><i>Project C# Filename:</i></b></td><td>@project.ProjectCSFileName</td></tr>
     <tr><td align="right"><b><i>No. C# Files:</i></b></td><td>@project.NoCSFiles</td></tr>
@@ -15,14 +15,81 @@
     <tr><td align="right"><b><i>Project Circuit:</i></b></td><td>@project.ProjectPNGFileName</td></tr>
 </table>
 <br />
-<h3>Watch this spaces</h3
+<p>
+    <i></i><b>A Blog post on the versions of the API packages:</b><i></i>
+    <a href="http://www.sportronics.com.au/coding/Nuget_Packages-Creating_and_using_a_local_Package-coding.html">Creating and using a local Nuget Package</a>
+</p>
 
-But in the mean time look at <a href="http://127.0.0.1:4000/coding/Nuget_Packages-Creating_and_using_a_local_Package-coding.html">Creating and using a local Nuget Package</a>
+<p>
+    The samples require the System.Device.GPIO and Iot.Device.Bindings packages.
+    The samples, as positioned within the repository, can be built in situa
+    where the packages will be built directy from the System.Device.GPIO and Iot.Device.Bindings folders in iot/src.
+    These are referenced in the samples' project files in each of the sample directories.
+    The sample project file that you have been directed to download in place of that specifies
+    V1.0.0 of the GPIO and Binding packages which are obtained as Nuget packaes as part of the build or restore commands.
+</p>
 <br />
+    ```dotnet build or dotnet restore or dotnet run ``` will get the version of the packages specified.
+<br />
+<p>
+    If you started with no reference to the packages in the project file you could add them as follows
+    <i>(which will currently install V1.0.0 of the packages):</i>:
+</p>
+<ClipBoardComponent Text=@TextToCopyGPIO />
+<ClipBoardComponent Text=@TextToCopyBindings />
+<p>
+    Version 1.0.0 is the current Stable release available from Nuget.org,
+    although there is are some Prerelease versions of 1.1.0 available from there.
+    Some samples require version 1.1.0 of the SystemDevice.GPIO and Iot.Device.Bindings.
+</p>
 
+<p>You can get the latest latest daily pre-release build (as per dotnet/iot ReadMe page) from:</p>
+<ClipBoardComponent Text=@TextToCopyGPIONightly />
+<ClipBoardComponent Text=@TextToCopyBindingsNightly />
+<br />
+<p>
+    <b>
+        The problem is that some of the Device Sample Apps do not run with any of those packages.<br />
+        So the packages have been built using a forked version of
+        the current dotnet/iot repository and made available here, if required:
+    </b>
+</p>
+<p>We will download and install those packages using the following commands which specify V1.1.0-dev versions of the packages:</p>
+
+<h3>Assuming that you are targeting a RPi running Raspian (Only those packages are available thus far):</h3>
+
+[1] Download the packages. <i>Note that these are hosted elsewhere (on myBlog)</i>
+<br />
+Download <a href="http://www.sportronics.com.au/pack/dotnet-iot/Linux-ARM/System.Device.Gpio.1.1.0-dev.nupkg">System.Device.GPIO Linux ARM</a>
+<br />
+Download <a href="http://www.sportronics.com.au/pack/dotnet-iot/Linux-ARM/System.Device.Gpio.1.1.0-dev.nupkg">Iot.Device.Bindings Linux ARM</a>
+<br />
+These will be in /Downloads.
+<br />
+<br />[2] Create a folder on the target such as /temp/nuget and move the downloaded packages to /temp/nuget.
+<br />
+<ClipBoardComponent Text="mkdir /temp;mkdir /temp/nuget;mv /Downloads/*.nupkg  /temp/nuget" />
+<br />[3] Set /temp/nuget as a local package source
+<br />
+<ClipBoardComponent Text="dotnet nuget add source /temp/nuget" />
+<br />[4] Install those packages:
+<br />
+<ClipBoardComponent Text=@TextToCopyGPIODev />
+<ClipBoardComponent Text=@TextToCopyBindingsDev />
+<br />
+<b>Now you should be ready to build and run your app!</b> 😀
 
 @code {
 
+    string TextToCopyGPIO = "dotnet add package System.Device.Gpio";
+    string TextToCopyBindings = "dotnet add package Iot.Device.Bindings";
+
+    string TextToCopyGPIONightly = "dotnet add package System.Device.Gpio --source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet5/nuget/v3/index.json";
+    string TextToCopyBindingsNightly = "dotnet add package Iot.Device.Bindings --source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet5/nuget/v3/index.json";
+
+
+    string TextToCopyGPIODev = "dotnet add package system.device.gpio -v 1.1.0-dev";
+    string TextToCopyBindingsDev = "dotnet add package iot.device.bindings -v 1.1.0-dev";
     string filecontents;
 
     private Project project;

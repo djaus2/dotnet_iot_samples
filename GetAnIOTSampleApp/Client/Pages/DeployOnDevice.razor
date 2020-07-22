@@ -16,11 +16,7 @@
 </table>
 <br />
 <MarkdownModel Content=@textToCopy />
-<br />
-<h5>Get System.Device.GPIO</h5>
-<ClipBoardComponent Text=@TextToCopyGPIO  />
-<h5>Get IoT.Device.Bindings</h5>
-<ClipBoardComponent Text=@TextToCopyBindings/>
+
 
 @code {
     string TextToCopyGPIO = "dotnet add package System.Device.Gpio --source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet5/nuget/v3/index.json";
