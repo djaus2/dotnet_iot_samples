@@ -5,15 +5,35 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Downloads\TextFile.txt" />
+    <Compile Remove="dotnet\iot\src\devices\CpuTemperature\samples\CpuTemperature.Sample.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="dotnet\getrepositoryhere.txt" />
+    <None Remove="dotnet\iot\src\devices\CpuTemperature\README.md" />
+    <None Remove="Downloads\TextFile.txt" />
+    <None Remove="dotnet\iot\src\devices\CpuTemperature\samples\CpuTemperature.Samples.csproj"/>
+    <None Remove="dotnet\iot\src\devices\CpuTemperature\samples\CpuTemperature.Sample.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="dotnet\getrepositoryhere.txt" />
+    <Content Include="dotnet\iot\src\devices\CpuTemperature\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="dotnet\iot\src\devices\CpuTemperature\samples\CpuTemperature.Sample.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="dotnet\iot\src\devices\CpuTemperature\samples\CpuTemperature.Samples.csproj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Downloads\TextFile.txt">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
+
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.0" />

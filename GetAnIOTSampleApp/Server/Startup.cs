@@ -16,8 +16,23 @@ namespace GetAnIOTSampleApp.Server
         {
             Configuration = configuration;
             // In appsettings.json:
-            string DefaultPath = Configuration.GetValue<string>("PathToRepository");
-        
+
+            int PathToUse12or3 = Configuration.GetValue<int>("PathToUse12or3");
+            string DefaultPath = "";
+            switch (PathToUse12or3)
+            {
+                case 1:
+                    DefaultPath = Configuration.GetValue<string>("PathToRepository");
+                    break;
+                case 2:
+                    DefaultPath = Configuration.GetValue<string>("PathToRepositoryAlt");
+                    break;
+                case 3:
+                    DefaultPath = Configuration.GetValue<string>("PathToRepositoryLocal");
+                    break;
+            }
+
+
             GetAnIOTSampleApp.Shared.WeatherForecast.Init(
                 GetSamples.GetSamplesProjects.GetDict(DefaultPath)
             );
