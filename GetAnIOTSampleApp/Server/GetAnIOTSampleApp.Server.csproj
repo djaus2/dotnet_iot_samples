@@ -5,19 +5,39 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="dotnet\iot\src\devices\Bmxx80\samples\Bme280.sample.cs" />
+    <Compile Remove="dotnet\iot\src\devices\Bmxx80\samples\Bme680.sample.cs" />
+    <Compile Remove="dotnet\iot\src\devices\Bmxx80\samples\Bmp280.sample.cs" />
     <Compile Remove="dotnet\iot\src\devices\CpuTemperature\samples\CpuTemperature.Sample.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="dotnet\getrepositoryhere.txt" />
+    <None Remove="dotnet\iot\src\devices\Bmxx80\README.md" />
+    <None Remove="dotnet\iot\src\devices\Bmxx80\samples\rpi-bmp280_i2c.png" />
     <None Remove="dotnet\iot\src\devices\CpuTemperature\README.md" />
     <None Remove="Downloads\TextFile.txt" />
-    <None Remove="dotnet\iot\src\devices\CpuTemperature\samples\CpuTemperature.Samples.csproj"/>
+    <None Remove="dotnet\iot\src\devices\CpuTemperature\samples\CpuTemperature.Samples.csproj" />
     <None Remove="dotnet\iot\src\devices\CpuTemperature\samples\CpuTemperature.Sample.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="dotnet\getrepositoryhere.txt" />
+    <Content Include="dotnet\iot\src\devices\Bmxx80\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dotnet\iot\src\devices\Bmxx80\samples\Bme280.sample.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dotnet\iot\src\devices\Bmxx80\samples\Bme680.sample.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dotnet\iot\src\devices\Bmxx80\samples\Bmp280.sample.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dotnet\iot\src\devices\Bmxx80\samples\rpi-bmp280_i2c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="dotnet\iot\src\devices\CpuTemperature\README.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -30,6 +50,18 @@
     <Content Include="Downloads\TextFile.txt">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="dotnet\iot\src\devices\Bmxx80\samples\Bme280.sample.csproj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dotnet\iot\src\devices\Bmxx80\samples\Bme680.sample.csproj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dotnet\iot\src\devices\Bmxx80\samples\Bmp280.sample.csproj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
