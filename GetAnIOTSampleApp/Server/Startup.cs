@@ -28,13 +28,22 @@ namespace GetAnIOTSampleApp.Server
                     DefaultPath = Configuration.GetValue<string>("PathToRepositoryAlt");
                     break;
                 case 3:
-                    DefaultPath = Configuration.GetValue<string>("PathToRepositoryLocal");
+                    DefaultPath = Configuration.GetValue<string>("PathToRepositoryWithinServer");
+                    break;
+                case 4:
+                    DefaultPath = Configuration.GetValue<string>("PathToRepositoryCopy");
                     break;
             }
 
+            string GenerateTextPath = Configuration.GetValue<string>("GenerateTextPath");
 
-            GetAnIOTSampleApp.Shared.WeatherForecast.Init(
-                GetSamples.GetSamplesProjects.GetDict(DefaultPath)
+            var x = GetSamples.GetSamplesProjects.GetDict(DefaultPath, GenerateTextPath);
+
+            System.Diagnostics.Debug.WriteLine("*********");
+            System.Diagnostics.Debug.WriteLine(x.Count());
+
+            GetAnIOTSampleApp.Shared.SamplesCollections.Init(
+                x
             );
         }
 

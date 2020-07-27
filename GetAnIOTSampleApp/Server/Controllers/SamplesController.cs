@@ -31,7 +31,9 @@ namespace GetAnIOTSampleApp.Server.Controllers
         [HttpGet]
         public string Get()
         {
-            var alpha = WeatherForecast.Projects;//.AlphaSort;
+           // var p = System.Diagnostics.Process.Start("notepad");
+           // p.WaitForExit();
+            var alpha = SamplesCollections.Projects;//.AlphaSort;
             string json = JsonConvert.SerializeObject(alpha);
             return json;
         }
@@ -45,7 +47,7 @@ namespace GetAnIOTSampleApp.Server.Controllers
             string ProjectName = names[1];
             string FileType = names[2];
             List<Project> projects =
-                GetAnIOTSampleApp.Shared.WeatherForecast.Projects[DeviceName];
+                GetAnIOTSampleApp.Shared.SamplesCollections.Projects[DeviceName];
             var xproject = from p in projects where p.Name == ProjectName select p;
             var project = xproject.FirstOrDefault();
             string path="";

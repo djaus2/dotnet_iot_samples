@@ -4,18 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="dotnet\iot\src\devices\Bmxx80\samples\Bme280.sample.cs" />
-    <Compile Remove="dotnet\iot\src\devices\Bmxx80\samples\Bme680.sample.cs" />
-    <Compile Remove="dotnet\iot\src\devices\Bmxx80\samples\Bmp280.sample.cs" />
-    <Compile Remove="dotnet\iot\src\devices\CpuTemperature\samples\CpuTemperature.Sample.cs" />
-  </ItemGroup>
+
 
   <ItemGroup>
     <None Remove="dotnet\getrepositoryhere.txt" />
-    <None Remove="dotnet\iot\src\devices\Bmxx80\README.md" />
-    <None Remove="dotnet\iot\src\devices\Bmxx80\samples\rpi-bmp280_i2c.png" />
-    <None Remove="dotnet\iot\src\devices\CpuTemperature\README.md" />
     <None Remove="Downloads\TextFile.txt" />
     <None Remove="Pages\HowTo.md" />
     <None Remove="Pages\HowTo2.md" />
@@ -23,57 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="dotnet\getrepositoryhere.txt" />
-    <Content Include="dotnet\iot\src\devices\Bmxx80\README.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="dotnet\iot\src\devices\Bmxx80\samples\Bme280.sample.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="dotnet\iot\src\devices\Bmxx80\samples\Bme680.sample.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="dotnet\iot\src\devices\Bmxx80\samples\Bmp280.sample.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="dotnet\iot\src\devices\Bmxx80\samples\rpi-bmp280_i2c.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="dotnet\iot\src\devices\CpuTemperature\README.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Pages\HowTo.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Pages\HowTo2.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Pages\Project.csproj.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="dotnet\iot\src\devices\CpuTemperature\samples\CpuTemperature.Sample.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="dotnet\iot\src\devices\CpuTemperature\samples\CpuTemperature.Samples.csproj">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Downloads\TextFile.txt">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="dotnet\iot\src\devices\Bmxx80\samples\Bme280.sample.csproj">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="dotnet\iot\src\devices\Bmxx80\samples\Bme680.sample.csproj">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="dotnet\iot\src\devices\Bmxx80\samples\Bmp280.sample.csproj">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+
 
 
 
@@ -92,6 +40,128 @@
     <ProjectReference Include="..\Client\GetAnIOTSampleApp.Client.csproj" />
     <ProjectReference Include="..\Shared\GetAnIOTSampleApp.Shared.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="dotnet\iot\src\devices\Ads1115\ReadMe.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ads1115\samples\Ads1115.Samples.csproj.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ads1115\samples\ADS1115_circuit.fzz">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ads1115\samples\ADS1115_circuit_bb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ads1115\samples\InterruptResult.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ads1115\samples\Program.cs.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ads1115\samples\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ads1115\samples\RunningResult.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Adxl345\ReadMe.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Adxl345\samples\Adxl345.Samples.csproj.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Adxl345\samples\ADXL345_circuit.fzz">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Adxl345\samples\ADXL345_circuit_bb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Adxl345\samples\Program.cs.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Adxl345\samples\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Adxl345\samples\RunningResult.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ags01db\ReadMe.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ags01db\samples\Ags01db.Samples.csproj.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ags01db\samples\AGS01DB_circuit.fzz">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ags01db\samples\AGS01DB_circuit_bb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ags01db\samples\Program.cs.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ags01db\samples\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ags01db\samples\RunningResult.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ak8963\ReadMe.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ak8963\samples\Ak8963.sample.cs.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Ak8963\samples\ak8963.sample.csproj.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Apa102\ReadMe.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Apa102\samples\Apa102.Samples.cs.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Apa102\samples\Apa102.Samples.csproj.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Bh1745\ReadMe.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Bh1745\samples\Bh1745.Sample.cs.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Bh1745\samples\Bh1745.Sample.csproj.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Bh1745\samples\Bh1745CustomConfiguration.Sample.cs.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Bh1745\samples\Bh1745CustomConfiguration.Sample.csproj.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Bh1750fvi\ReadMe.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Bh1750fvi\samples\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Bmp180\ReadMe.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Bmp180\samples\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Bmxx80\ReadMe.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Bmxx80\samples\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+
 
 
 </Project>

@@ -11,7 +11,7 @@
                 &nbsp;
 @if (@UseFileName)
 {
-     <button type="button" class="btn btn-primary" @onclick="DownloadFile">Download</button><b><i>&nbsp;Filename:&nbsp;</i></b>@Filename
+     <button type="button" class="btn btn-primary" @onclick="DownloadFile">Download</button><b><i>&nbsp;Filename:&nbsp;</i></b>@showFilename
 }
                 </td>
             </tr>
@@ -27,6 +27,8 @@
     [Parameter] public string Text { get; set; }
     [Parameter] public string Filename { get; set; } = "";
 
+    public string showFilename { get; set; } = "";
+
     bool UseFileName = true;
 
     protected async override Task OnInitializedAsync()
@@ -35,6 +37,14 @@
 
         if (Filename == "")
             UseFileName = false;
+        else
+        {
+            // This is because filenames may have .txt appended
+            if (Filename.Substring(Filename.Length - ".txt".Length).ToLower() == ".txt")
+                showFilename =  Filename.Substring(0, Filename.Length - ".txt".Length);
+            else
+                showFilename =  Filename;
+        }
     }
 
 
@@ -46,6 +56,6 @@
     async Task DownloadFile()
     {
         var bytes = System.Text.Encoding.UTF8.GetBytes(Text);
-        await FileUtil.SaveAs(JSRuntime, Filename, bytes);
+        await FileUtil.SaveAs(JSRuntime, showFilename, bytes);
     }
 }

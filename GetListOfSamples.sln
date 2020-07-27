@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetListOfSamples", "GetListOfSamples\GetListOfSamples.csproj", "{BE19DB34-3479-4D41-A4B6-C327B794E927}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectClasses", "ProjectClasses\ProjectClasses.csproj", "{ACC314D9-83FB-44F9-9295-FCFFBD7F1BCC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetAnIOTSampleApp.Server", "GetAnIOTSampleApp\Server\GetAnIOTSampleApp.Server.csproj", "{A80D2BA8-BDDB-4816-B737-A5C93100C13E}"
@@ -21,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BE19DB34-3479-4D41-A4B6-C327B794E927}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE19DB34-3479-4D41-A4B6-C327B794E927}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE19DB34-3479-4D41-A4B6-C327B794E927}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE19DB34-3479-4D41-A4B6-C327B794E927}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ACC314D9-83FB-44F9-9295-FCFFBD7F1BCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ACC314D9-83FB-44F9-9295-FCFFBD7F1BCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACC314D9-83FB-44F9-9295-FCFFBD7F1BCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
