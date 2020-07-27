@@ -62,9 +62,22 @@ namespace GetSamples
             }
             Directory.CreateDirectory(GenerateTextPath);
 #endif
-
+            ;
+            string profile = "";
             foreach (string dir in dirs)
             {
+                string s1 = $"<None Update=\"{dir}\\ReadMe.md\">";
+                string s2 = $"<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>";
+                string s3 = "</None>";
+                string s4 = $"<None Update=\"{dir}\\samples\\*.*\" >";
+                string s5 = $"<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>";
+                string s6 = "</None>";
+                profile += s1 + "\r\n";
+                profile += s2 + "\r\n";
+                profile += s3 + "\r\n";
+                profile += s4 + "\r\n";
+                profile += s5 + "\r\n";
+                profile += s6 + "\r\n";
 #if COPYREPOSITORY
                 var ddir = dir.Replace(UpperPath, GenerateTextPath);
                 Directory.CreateDirectory(ddir);
@@ -203,6 +216,7 @@ namespace GetSamples
                     }
                 }
             }
+            System.Diagnostics.Debug.WriteLine(profile);
             return Projects;
         }
     }
