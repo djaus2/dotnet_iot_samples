@@ -216,7 +216,12 @@ namespace GetSamples
                     }
                 }
             }
+            // The following generates content to include samples in server project when deployed as content.
+            System.Diagnostics.Debug.WriteLine("Use this is the server project file as an <itemgroup></itemgroup>");
+            System.Diagnostics.Debug.WriteLine("Path will need modification");
+            System.Diagnostics.Debug.WriteLine("<itemgroup>");
             System.Diagnostics.Debug.WriteLine(profile);
+            System.Diagnostics.Debug.WriteLine("</itemgroup>");
             return Projects;
         }
     }
