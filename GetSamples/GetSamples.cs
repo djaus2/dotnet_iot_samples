@@ -31,6 +31,8 @@ namespace GetSamples
                 path = DefaultPath;
             path += @"\src\Devices";
                 var projects = GetProjects(path);
+            List<Project> mediaProjects = GetProjects(Path.Combine(path, "media"));
+            projects.AddRange(mediaProjects);
             System.Diagnostics.Debug.WriteLine("=======");
             System.Diagnostics.Debug.WriteLine(projects.Count());
             var devices = projects.GroupBy(x => x.DeviceName)
@@ -62,7 +64,7 @@ namespace GetSamples
             }
             Directory.CreateDirectory(GenerateTextPath);
 #endif
-            ;
+            
             string profile = "";
             foreach (string dir in dirs)
             {
