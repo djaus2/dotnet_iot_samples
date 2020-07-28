@@ -297,6 +297,24 @@
     <None Update="dotnet\iot\src\Devices\Mcp9808\samples\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="dotnet\iot\src\devices\Media\MediaSoundDevice\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Media\MediaSoundDevice\samples\Alsa.Samples.csproj.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Media\MediaSoundDevice\samples\Program.cs.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Media\MediaVideoDevice\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Media\MediaVideoDevice\samples\Program.cs.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="dotnet\iot\src\devices\Media\MediaVideoDevice\samples\VideoDevice.Samples.csproj.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="dotnet\iot\src\Devices\Media\ReadMe.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
