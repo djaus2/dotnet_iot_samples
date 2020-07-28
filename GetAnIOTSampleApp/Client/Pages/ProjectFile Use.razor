@@ -17,14 +17,19 @@
     <tr><td align="right"><b><i>Project Circuit:</i></b></td><td>@project.ProjectPNGFileName</td></tr>
 </table>
 <br />
+<input @bind="VERSION">&nbsp;<button @onclick="OnClick">Update Package Versions</button>
+<br />
 <ClipBoardComponent Text=@textToCopy Filename=@project.ProjectFileName />
 <br />
+
 
 
 @code {
     private Project project;
     public string filecontents;
     public string textToCopy;
+
+    string VERSION = "1.0.0";
 
     bool done = false;
     protected override void OnAfterRender(bool firstRender)
@@ -52,8 +57,14 @@
 
             filecontents = await _SamplesClient.GetFile(DeviceNameProjectName);
             textToCopy = "<!-- " + project.ProjectFileName_WithoutText + "-->" + "\n" + filecontents;
+            textToCopy = textToCopy.Replace("$$VERSION$$",VERSION);
         }
     }
 
-
+    protected void OnClick(MouseEventArgs e)
+    {
+        textToCopy = "<!-- " + project.ProjectFileName_WithoutText + "-->" + "\n" + filecontents;
+        textToCopy = textToCopy.Replace("$$VERSION$$",VERSION);
+        StateHasChanged();
+    }
 }

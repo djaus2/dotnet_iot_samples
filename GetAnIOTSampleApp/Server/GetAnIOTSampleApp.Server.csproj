@@ -9,9 +9,6 @@
   <ItemGroup>
     <None Remove="dotnet\getrepositoryhere.txt" />
     <None Remove="Downloads\TextFile.txt" />
-    <None Remove="Pages\HowTo.md" />
-    <None Remove="Pages\HowTo2.md" />
-    <None Remove="Pages\Project.csproj.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -502,6 +499,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="dotnet\iot\src\Devices\Ws28xx\ReadMe.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Pages\HowTo.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Pages\HowTo2.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Pages\Project.csproj.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="dotnet\iot\src\Devices\Ws28xx\samples\*.*">
