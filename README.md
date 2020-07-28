@@ -13,4 +13,7 @@ App is ready to use now.  Includes resolution of Packages versioning issue. See 
 ## Use
 To use the app, get this repository and one of dotnet/iot or djaus2/iot _(in a separate folder)_. Set the app to point to the second repository in appsettings.json. Note there is a property there which takes on values 1,2 or 3 to point to different locations. Currently it is set to 3 which points to dotnet\iot in the server. Don't put your copy of the iot repository there as you will get issues with .cs and csproj being compiled. Also for remote use you will need to change localhost the IPAddress of where the server runs, in Propeties\launchsettings.json
 
-A "sample" version of this app is currently hosted on azure at [getiotsamples.azurewebsites.net](https://getiotsamples.azurewebsites.net/). Only two of the repository devices are included at this stage.
+This app is currently hosted on azure at [getiotsamples.azurewebsites.net](https://getiotsamples.azurewebsites.net/).  
+- All projects are there now.  
+- Limitation: Only single source code sample projects supported.
+
