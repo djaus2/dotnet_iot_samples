@@ -348,3 +348,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/GetAnIOTSampleApp/Server/Properties/ServiceDependencies/GetIOTSamples - Web Deploy/profile.arm.json
+/GetAnIOTSampleApp/Server/Properties/ServiceDependencies/getiotsamples - Web Deploy1/profile.arm.json
